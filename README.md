@@ -24,7 +24,7 @@ To run the Task Manager App locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/task-manager-app.git
+   git clone https://github.com/PranavNaik77/task-manager.git
    ```
 
 2. Go to MongoDB and create a database. replace the username and password in .env file in api folder.
