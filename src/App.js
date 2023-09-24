@@ -1,24 +1,54 @@
-import logo from './logo.svg';
+import React, { useContext, useState } from 'react';
+import {Routes, Route, useNavigate} from 'react-router-dom';
+import { useEffect } from 'react';
 import './App.css';
+import TodoWrapper from './components/TodoWrapper';
+import Login from './pages/Login/Login';
+import Signup from './pages/Signup/Singnup';
+import { AuthContext } from './context/AuthContext';
 
 function App() {
+
+  const [isLoggedin, setIsLoggedin] = useState(false);
+  const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    login();
+  },[user])
+
+  const login = () => {
+    if(user){
+      setIsLoggedin(true);
+      navigate('/dashboard');
+    }
+    else{
+      setIsLoggedin(false);
+      navigateToLogin()
+    }
+  }
+
+  const navigateToLogin = () => {
+    navigate('/login');
+  }
+
+  const navigateToDashboard = () => {
+    login();
+  }
+
+  const navigateToSignup = () => {
+    navigate('/signup');
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route exact path='/login' element={<Login navigateToDashboard = {navigateToDashboard} navigateToSignup = {navigateToSignup}/>}/>
+        <Route exact path='/signup' element={<Signup navigateToLogin = {navigateToLogin}/>} />
+        <Route exact path='/dashboard' element={<TodoWrapper />} />
+      </Routes>
+    </>
   );
 }
 
